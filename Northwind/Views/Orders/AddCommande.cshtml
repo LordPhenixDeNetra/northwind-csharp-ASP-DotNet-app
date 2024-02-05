@@ -1,0 +1,116 @@
+﻿@model Northwind.Models.OrderDetail
+
+
+@{
+    ViewData["Title"] = "Add Commande";
+}
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .form-containe {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .contain-center {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px;
+    }
+
+    .form-containe-2 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 18px;
+        border-radius: 25px;
+        background: #e0e0e0;
+        box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+    }
+
+    form {
+        width: 100%;
+    }
+
+        form > div {
+            margin: 12px;
+        }
+
+    div > input, div > select {
+        border-radius: 45px;
+        background: #e0e0e0;
+        box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff;
+    }
+
+</style>
+
+<h4>Ajouter Produit</h4>
+<hr />
+
+<div class="form-containe">
+    <div class="row contain-center">
+        <div class="col-md-4 form-containe-2">
+            <form asp-action="AddCommande" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="ProductId" class="control-label"></label>
+                    <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UnitPrice" class="control-label"></label>
+                    <input asp-for="UnitPrice" class="form-control" />
+                    <span asp-validation-for="UnitPrice" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Quantity" class="control-label"></label>
+                    <input asp-for="Quantity" class="form-control" />
+                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Discount" class="control-label"></label>
+                    <input asp-for="Discount" class="form-control" />
+                    <span asp-validation-for="Discount" class="text-danger"></span>
+                </div>
+                <!--
+                <div class="form-group">
+                    <input type="submit" value="Ajouter" class="btn btn-primary" />
+                </div>
+
+                -->
+                
+
+                <div class="form-group">
+                    <input type="submit" value="Ajouter" class="btn btn-primary" /> |
+                    <a class="btn btn-success" asp-action="Enregistrer">Enregistrer</a>
+                </div>
+            </form>
+
+            <!--
+                            
+              <a class="btn btn-success" asp-action="Enregistrer">Enregistrer</a>
+            -->
+            
+        </div>
+    </div>
+
+
+</div>
+
+<div>
+    <a class="btn btn-primary" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

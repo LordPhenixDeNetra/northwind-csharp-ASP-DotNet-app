@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Northwind.Models.Order>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<!-- Champ de recherche -->
+<div class="search-container">
+    <input type="text" id="search-input" placeholder="Search by Order ID or Customer ID">
+    <button id="search-button">Search</button>
+</div>
+
+<p>
+    <a class="btn btn-success" asp-action="Create">Create New</a>
+</p>
+<table class="table table-dark table-hover">
+    <thead>
+        <tr>
+            <th>
+                Customer ID
+            </th>
+            <th>
+                Order ID
+            </th>
+            <th>
+                Product Name
+            </th>
+            <th>
+                Order Date
+            </th>
+            <th>
+                Unit Price
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="m-1" >
+        @foreach (var order in Model)
+        {
+            foreach (var orderDetail in order.OrderDetails)
+            {
+                <tr class="m-1" >
+                    <td>@order.CustomerId</td>
+                    <td>@order.OrderId</td>
+                    <td>@orderDetail.Product.ProductName</td>
+                    <td>@order.OrderDate</td>
+                    <td>@orderDetail.UnitPrice</td>
+                    <td>@orderDetail.Quantity</td>
+                    <td>
+                        <a asp-action="Edit"    class="btn btn-warning" asp-route-id="@order.OrderId">Edit</a> |
+                        <a asp-action="Details" class="btn btn-success" asp-route-id="@order.OrderId">Details</a> |
+                        <a asp-action="Delete"  class="btn btn-info"  asp-route-id="@order.OrderId">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <script>
+        $(function () {
+            $('#search-button').click(function () {
+                var searchText = $('#search-input').val().trim().toLowerCase();
+                if (searchText.length > 0) {
+                    // Effectuer la recherche
+                    $('tbody tr').each(function () {
+                        var orderId = $(this).find('td:nth-child(2)').text().trim().toLowerCase();
+                        var customerId = $(this).find('td:nth-child(1)').text().trim().toLowerCase();
+                        if (orderId === searchText || customerId === searchText) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    });
+                } else {
+                    // Réinitialiser la recherche et afficher toutes les lignes
+                    $('tbody tr').show();
+                }
+            });
+        });
+    </script>
+}
